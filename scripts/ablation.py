@@ -23,12 +23,15 @@ except ImportError:
 # 1. CONFIGURATION
 # =============================================================================
 
+# Project paths. These defaults also work when the script is run directly.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 # Path to the feature superset (Config 1 + 2 + 3 columns in one file).
-CSV_PATH = Path("config3_features.csv")
+CSV_PATH = PROJECT_ROOT / "data" / "config3_features.csv"
 
 # Where the ablation outputs are written.
-OUTPUT_DIR = Path("outputs")
-MODEL_DIR = Path("models")
+OUTPUT_DIR = PROJECT_ROOT / "outputs"
+MODEL_DIR = PROJECT_ROOT / "models"
 
 # Reproducibility.
 RANDOM_SEED = 42

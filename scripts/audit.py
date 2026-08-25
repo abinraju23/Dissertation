@@ -1,5 +1,6 @@
 import sys
 import re
+from pathlib import Path
 import numpy as np
 import pandas as pd
 
@@ -8,7 +9,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 from sklearn.feature_selection import mutual_info_classif
 
-CSV = sys.argv[1] if len(sys.argv) > 1 else "config3_features.csv"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+CSV = sys.argv[1] if len(sys.argv) > 1 else str(PROJECT_ROOT / "data" / "config3_features.csv")
 pd.set_option("display.width", 120)
 pd.set_option("display.max_columns", 40)
 
