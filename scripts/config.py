@@ -1,10 +1,3 @@
-"""
-Central configuration for the news-collection phase.
-
-Edit this one file to change the stock universe, the date window, or the
-collection behaviour. Everything else (the probe, the collector) imports from
-here so there is a single source of truth.
-"""
 from pathlib import Path
 
 # --------------------------------------------------------------------------

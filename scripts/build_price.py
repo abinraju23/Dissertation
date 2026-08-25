@@ -1,33 +1,3 @@
-
-"""
-============================================================================
-PRICE COLLECTION + CONFIG 1 FEATURES + SHARED LABEL
-============================================================================
-Builds the price side of the pipeline for the final 30 stocks:
-
-  * Daily adjusted OHLCV from yfinance (2022-2024)
-  * Config 1 feature set: returns, moving-average relatives, volatility,
-    relative volume, intraday range  -- all STATIONARY transforms
-  * The shared TARGET: binary direction of the NEXT day's close
-        label_t = 1 if close_{t+1} > close_t else 0
-    (this is the same label all three configs train against)
-
-Output (keyed on (ticker, date) -- the master join key):
-  * data/prices/<TICKER>.csv      raw adjusted OHLCV per ticker
-  * data/config1_features.csv     combined long panel: ticker,date,features,
-                                   ret_next,label,split
-
-DELIBERATELY NOT DONE HERE:
-  * No feature scaling. Scalers are fit on TRAIN ONLY, later, at the
-    modelling stage -- scaling now would leak val/test stats into train.
-  * No look-ahead: every feature at row t uses prices up to and including
-    day t; only the label looks one day forward.
-
-Run:
-    python scripts/build_price.py
-============================================================================
-"""
-
 import os
 import time
 import pandas as pd

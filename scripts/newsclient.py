@@ -1,18 +1,3 @@
-"""
-Thin client around the Alpha Vantage NEWS_SENTIMENT endpoint.
-
-Handles the three things that bite people with this API:
-  1. Rate limiting    -> a simple throttle between calls.
-  2. Soft errors      -> Alpha Vantage returns rate-limit / error notes as a
-                         normal 200 JSON body (keys "Information" / "Note" /
-                         "Error Message") instead of an HTTP error. We detect
-                         those explicitly and raise.
-  3. Date formatting   -> the API wants YYYYMMDDTHHMM strings.
-
-The API key is read from the ALPHAVANTAGE_API_KEY environment variable. Never
-hard-code it. On Windows PowerShell, set it for the session with:
-    $env:ALPHAVANTAGE_API_KEY = "YOUR_KEY_HERE"
-"""
 from __future__ import annotations
 
 import os

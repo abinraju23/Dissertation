@@ -1,38 +1,3 @@
-"""
-============================================================================
-CONFIG 3 -- KNOWLEDGE GRAPH BLOCK  (Node2Vec + Procrustes alignment)
-============================================================================
-For each trading day, build a news CO-OCCURRENCE graph from the prior
-window of news, embed it with Node2Vec, align it to the previous day's
-embedding (Orthogonal Procrustes) so vectors are comparable across days,
-and attach each stock's daily vector + a few interpretable centrality
-features to the panel.
-
-Nodes : 30 target stocks + 8 macro hubs + co-mentioned context tickers
-        (context nodes pruned to those with real connectivity in-window).
-Edges : co-occurrence within an article, ROUNDUP-DISCOUNTED by 1/(k-1)
-        so a 20-ticker market wrap contributes weak pairwise evidence.
-
-LEAKAGE RULE: the graph for day t uses only news dated STRICTLY BEFORE
-day t (window [t-WINDOW_DAYS, t)). Nothing from day t or later touches
-day t's embedding.
-
-STABILITY: Node2Vec is stochastic and rotation-invariant, so each day's
-raw embedding sits in its own coordinate frame. We align day t to day
-t-1 with an orthogonal matrix solved on the shared (persistent) nodes --
-the standard Procrustes approach (tNodeEmbed / DynSEM / Singer et al.).
-
-Stages (Stage A is the slow one and is CACHED -> resumable):
-  A  per-date windowed graph -> Node2Vec -> cache raw embeddings to disk
-  B  sequential Procrustes alignment across dates
-  C  extract per-stock vector + centrality, carry forward on stale days,
-     join onto config2_features.csv -> config3_features.csv
-
-Run:
-    python scripts/build_graph.py
-============================================================================
-"""
-
 import os, glob, json, re, pickle, time
 from datetime import datetime, timedelta
 from itertools import combinations

@@ -1,15 +1,3 @@
-r"""
-What it does
-    - Reads the STORED test predictions only (no model is run).
-    - Draws one panel per model type (Logistic Regression, XGBoost), each
-      with the three config curves plus the dashed diagonal for a random
-    classifier (AUC = 0.50) as the random-classification baseline.
-    - Writes an overall AUC table with 95% CIs (Hanley-McNeil for now; the
-      DeLong script will replace/confirm these and add pairwise tests).
-
-Run from the project root:   python scripts\diag_roccurves.py
-"""
-
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -68,7 +56,7 @@ def main():
         print(f"    {r.model:<20} {CONFIG_DISPLAY[r.config]:<38} "
               f"AUC = {r.auc:.3f}  [{r.auc_ci_low:.3f}, {r.auc_ci_high:.3f}]  (n = {r.n})")
     print("\n[roc] done. Curves hugging the diagonal with CIs straddling 0.50 is the")
-    print("figure that makes the null result visually undeniable in the report.")
+    print("figure showing the model curves against the random baseline.")
 
 
 if __name__ == "__main__":

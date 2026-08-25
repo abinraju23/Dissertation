@@ -1,8 +1,3 @@
-"""
-Reveal the real structure of one raw news file so the probe loader
-can be matched to it. Reads ONE file and prints its shape. Paste the
-output back.
-"""
 import os, glob, json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

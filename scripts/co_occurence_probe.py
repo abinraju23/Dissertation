@@ -1,36 +1,3 @@
-"""
-============================================================================
-CO-OCCURRENCE CONNECTIVITY PROBE
-============================================================================
-Purpose:
-    Before freezing the final 30 stocks, check whether they actually FORM A
-    CONNECTED GRAPH in the news -- not just whether they have enough articles.
-    Also produces the graph descriptive-statistics (node count, edge count,
-    density, and components for graph description.
-
-What it measures (using data already on disk -- NO FinBERT required):
-    1. DIRECT links  : two target stocks tagged in the same article
-                       (from Alpha Vantage's own `ticker_sentiment` list).
-    2. INDIRECT links: two stocks that both attach to the same MACRO HUB
-                       (OIL, FED_RATES, RECESSION, ...) via phrase-matching
-                       the title+summary. This mirrors the
-                       macro_entities.py
-                       idea and is how XOM and JPM end up "related" without
-                       ever sharing a headline.
-
-IMPORTANT -- this is a STATIC, full-period graph built for SELECTION and
-DESCRIPTIVE STATS ONLY. It is deliberately NOT the modelling graph. Your
-Config 3 graph is the daily sliding-window version built strictly from past
-data to avoid look-ahead. Do not feed this static graph into the model.
-
-How to run:
-    1. Set RAW_DIR below to the folder holding your raw news JSON.
-    2. (Optional) edit CANDIDATES to change the candidate list.
-    3. python scripts/co_occurence_probe.py
-    4. Read the console verdict; CSVs + heatmap land in OUTPUT_DIR.
-============================================================================
-"""
-
 import os
 import re
 import csv
@@ -56,9 +23,9 @@ except Exception:
 # CONFIG  -- edit these
 # ============================================================================
 
-# Folder containing your raw Alpha Vantage news. The loader searches it
-# recursively for .json / .jsonl files, so per-slice or per-ticker layouts
-# both work. EDIT THIS to point at your raw layer.
+# Folder containing the raw Alpha Vantage news. The loader searches it
+# recursively for .json / .jsonl files in per-slice or per-ticker layouts.
+# Update this path when the raw data location changes.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DIR = os.path.join(BASE_DIR, "data", "raw")
 
@@ -89,8 +56,8 @@ SECTOR_OF = {t: s for s, tickers in CANDIDATES.items() for t in tickers}
 
 # ----------------------------------------------------------------------------
 # MACRO HUB LEXICON
-# Self-contained phrase lexicon mirroring the macro_entities.py (8 hubs).
-# Replace with `from macro_entities import ...` later if you prefer your own.
+# Self-contained phrase lexicon for the eight macro hubs.
+# Keep this list aligned with macro_entities.py.
 # Phrases are matched case-insensitively as whole words on title + summary.
 # ----------------------------------------------------------------------------
 MACRO_LEXICON = {
@@ -284,7 +251,7 @@ def analyse(tallies, G):
     out("CO-OCCURRENCE CONNECTIVITY PROBE  --  RESULTS")
     out("=" * 70)
     out(f"Articles scanned                : {tallies['article_count']:,}")
-    out(f"Articles touching your universe : {tallies['used_count']:,}")
+    out(f"Articles touching the stock universe : {tallies['used_count']:,}")
     out(f"Stocks in universe              : {len(TARGETS)}")
     out(f"Macro hubs                      : {len(MACRO_HUBS)}")
     out("")

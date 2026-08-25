@@ -1,45 +1,3 @@
-"""
-ablation.py
-===============
-Modelling and ablation study for:
-    "Leveraging Financial News Knowledge Graphs & NLP for Short-Term
-     Stock Price Movement Prediction"
-    Abin Raju (20067824) - DBS MSc Data Analytics Applied Research Project.
-
-Trains Logistic Regression and XGBoost across three feature configurations and
-writes a single ablation table (CSV + Markdown).
-
-    Config 1 : Price features only                          (baseline features)
-    Config 2 : Price + FinBERT sentiment
-    Config 3 : Price + sentiment + Node2Vec graph embeddings
-
-------------------------------------------------------------------------------
-LEAKAGE-PREVENTION DESIGN  (the core methodological guarantee of this study)
-------------------------------------------------------------------------------
-  * Chronological split, never random:
-        train      2022-01-01 .. 2023-12-31
-        validation 2024-01-01 .. 2024-06-30   (2024 H1)
-        test       2024-07-01 .. 2024-12-31   (2024 H2)
-    No row from a later period ever informs an earlier decision.
-
-  * The StandardScaler is fit on TRAIN ONLY, then applied unchanged to the
-    validation and test folds. A fresh scaler is fit per configuration because
-    each configuration has a different feature set.
-
-  * Hyperparameters are selected using VALIDATION performance only. The test
-    fold plays no role in model selection or hyperparameter tuning.
-
-  * The test fold is scored EXACTLY ONCE, at the very end, to fill the final
-    ablation table. It is never inspected during tuning.
-
-  * To keep the ablation controlled, all three configs are evaluated on the
-    IDENTICAL set of rows (the only thing that changes between configs is the
-    feature columns going into the model).
-
-Run:
-    python scripts/ablation.py [path_to_config3_features.csv]
-"""
-
 from __future__ import annotations
 
 import re
@@ -62,7 +20,7 @@ except ImportError:
     )
 
 # =============================================================================
-# 1. CONFIGURATION  --  edit here if your column names differ
+# 1. CONFIGURATION
 # =============================================================================
 
 # Path to the feature superset (Config 1 + 2 + 3 columns in one file).

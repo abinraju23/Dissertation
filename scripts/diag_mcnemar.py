@@ -1,24 +1,3 @@
-r"""
-Statistical characterisation of the null result: DeLong AUC tests and
-McNemar tests on the stored test predictions. No model is run; the frozen
-results are only read.
-
-What it does
-    - DeLong (1988) standard errors and 95% CIs for each config x model AUC,
-      plus a z-test of each AUC against chance (0.50). These are the proper
-            CIs for statistical reporting (they replace the provisional
-            Hanley-McNeil ones from diag_roccurves.py).
-    - Paired DeLong tests along the ablation ladder, within each model:
-        config1 vs config2  (does adding sentiment change AUC?)
-        config2 vs config3  (does adding the graph change AUC?)
-        config1 vs config3  (do both together change AUC?)
-    - McNemar tests on the stored hard predictions for the same pairs
-      (do the models make DIFFERENT mistakes, not just equally many?).
-    - Holm correction within each family of six pairwise tests.
-
-Run from the project root:   python scripts\diag_mcnemar.py
-"""
-
 import numpy as np
 import pandas as pd
 from scipy import stats

@@ -1,26 +1,3 @@
-"""
-Step 4 -- Full news collection from Alpha Vantage.
-
-For every candidate ticker, sweep the whole window in small slices (monthly by
-default), saving each API response to disk EXACTLY as returned. Key behaviours:
-
-  * Cap-aware: each call is limited to 1000 items. If a slice comes back at the
-    cap it may be truncated, so the slice is split in half by time and each half
-    re-fetched, recursively, until no slice hits the cap (or a slice is a single
-    day -- a single ticker exceeding 1000 articles in one day is effectively
-    impossible, so we just warn).
-
-  * Immutable raw layer: responses land under
-        data/raw/news/alphavantage/<TICKER>/<TICKER>__<from>__<to>.json
-    wrapped with the query params and a fetched_at stamp for provenance. We do
-    NOT transform anything here -- tidy tables are built from this layer later.
-
-  * Resumable: a slice whose file already exists is skipped, so you can stop and
-    re-run safely without re-spending API calls.
-
-Run the whole sweep:        python scripts/collectnews.py
-Run a few tickers only:     python scripts/collectnews.py AAPL MSFT NVDA
-"""
 from __future__ import annotations
 
 import os

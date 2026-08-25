@@ -1,21 +1,3 @@
-"""
-============================================================================
-CONFIG 3 SANITY CHECK -- did the embeddings recover sector structure?
-============================================================================
-If the news co-occurrence graph carries real relational signal, stocks in
-the SAME GICS sector should embed closer together than stocks in DIFFERENT
-sectors -- even though nothing ever told Node2Vec what sector anything is.
-
-Outputs:
-  * console: mean intra- vs inter-sector cosine (averaged over many dates),
-    and how often intra > inter across dates (should be ~all of them)
-  * sector_scatter.png : 2D PCA of one date's embeddings, coloured by sector
-  * sector_heatmap.png : cosine-similarity matrix, ordered by sector
-
-Run:
-    python scripts/check_sectors.py
-============================================================================
-"""
 import os
 import numpy as np
 import pandas as pd

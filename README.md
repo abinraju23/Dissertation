@@ -32,6 +32,16 @@ Install the dependencies:
 python -m pip install -r requirements.txt
 ```
 
+If the `venv` folder is deleted, recreate it from the project root using the
+same commands above. The project data, saved models, and generated outputs are
+stored outside the virtual environment and are not deleted with it.
+
+To verify that the recreated environment is ready:
+
+```powershell
+python -c "import pandas, sklearn, xgboost, torch, transformers; print('Environment ready')"
+```
+
 For GPU acceleration, install the appropriate CUDA build of PyTorch using the
 [official PyTorch selector](https://pytorch.org/get-started/locally/) before
 installing the remaining requirements. CPU execution is supported but FinBERT
@@ -42,6 +52,21 @@ Set the Alpha Vantage key for the current PowerShell session:
 ```powershell
 $env:ALPHAVANTAGE_API_KEY = "YOUR_KEY_HERE"
 ```
+
+To run the pipeline with existing downloaded data, skip news collection:
+
+```powershell
+python run_pipeline.py --skip-collection
+```
+
+To also skip the optional coverage probe:
+
+```powershell
+python run_pipeline.py --skip-collection --skip-coverage
+```
+
+For a fresh collection, set `ALPHAVANTAGE_API_KEY` in the current PowerShell
+session before running `python run_pipeline.py`.
 
 ## Pipeline
 

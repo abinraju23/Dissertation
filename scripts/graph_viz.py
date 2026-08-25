@@ -1,25 +1,3 @@
-"""
-============================================================================
-KNOWLEDGE GRAPH VISUALISATION
-============================================================================
-Draws ONE sliding-window co-occurrence graph from the real news, so you can
-SEE what Config 3 is built on. Produces two figures:
-
-  graph_backbone.png : the 30 target stocks (coloured by sector) + 8 macro
-                       hubs (gold diamonds), force-directed so related nodes
-                       pull together, edges weighted by co-occurrence.
-                       --> the readable, report-quality figure.
-  graph_full.png     : the same window with all context tickers faded in
-                       behind it, to show the true scale/density.
-                       --> the "this is the real graph" appendix figure.
-
-Reuses the exact graph-construction logic from build_graph.py, so the
-picture matches what the model actually used.
-
-Run:
-    python scripts/graph_viz.py
-============================================================================
-"""
 import os
 from datetime import timedelta
 import numpy as np

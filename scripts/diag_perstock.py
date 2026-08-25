@@ -1,18 +1,3 @@
-r"""
-What it does
-    - Reads the STORED test predictions only (no model is run).
-    - Computes AUC, accuracy, and the majority-class share per ticker, for
-      every config x model.
-    - Puts a 95% CI around each per-ticker AUC (Hanley-McNeil) and counts how
-      many tickers sit outside the chance interval -- compared with the ~5%
-    expected by chance alone. This assesses whether the null is uniform
-    across stocks or driven by a small subset.
-    - Draws one dot plot per model type (30 tickers x 3 configs, with the
-      0.50 chance line).
-
-Run from the project root:   python scripts\diag_perstock.py
-"""
-
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

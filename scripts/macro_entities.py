@@ -1,21 +1,3 @@
-"""
-macro_entities.py -- Macro/global factor tagging (Mechanism B).
-
-Tags financial news text for macro themes using a curated phrase lexicon
-across eight macro nodes:
-    OIL, GOLD, FED_RATES, INFLATION, RECESSION, GEOPOLITICS,
-    TRADE_TARIFFS, MARKET_RISK
-
-These macro entities become NODES in the same shared graph as the companies.
-When a news article mentions a company AND a macro factor, a co-occurrence
-edge forms between them. Node2Vec then encodes each stock's macro exposure
-(oil-sensitive, rate-sensitive, etc.) learned directly from the news.
-
-Why a lexicon and not NER: macro concepts (interest rates, inflation,
-geopolitics) are not reliable named entities, so standard NER misses them.
-Keep the lexicon small and specific -- broad single words cause false
-positives ("war" matches "price war", "dollar" appears everywhere).
-"""
 import re
 
 # Each macro node -> trigger phrases (matched case-insensitively on word

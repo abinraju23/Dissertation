@@ -1,19 +1,3 @@
-"""
-Step 0 / Step 2 -- News coverage probe.
-
-For each candidate ticker, fire ONE EARLIEST call across the whole window and
-report:
-  * the earliest article date actually returned (does the archive reach 2022?)
-  * how many items came back in that single call
-  * whether it hit the 1000 cap (a "yes" means there is plenty more behind it)
-
-This is fast triage, not a true count -- the single call is capped at 1000, so
-the count is a floor. A ticker that returns near 1000 with an earliest date in
-early 2022 is comfortably above the 100-article bar. A ticker that returns far
-fewer with a recent earliest date is thin and a candidate to drop.
-
-Run:  python news_coverage_probe.py
-"""
 from __future__ import annotations
 
 import csv

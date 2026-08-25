@@ -1,18 +1,3 @@
-r"""
-diag_common.py -- shared helpers for the four diagnostic scripts
-
-These scripts only READ stored pipeline outputs (feature CSVs, stored test
-predictions, ablation results). None of them run a new evaluation on the
-test set or change any frozen result.
-
-Run every script from the project root with the venv active, e.g.:
-
-    python scripts\diag_roccurves.py
-
-If a script cannot find a column it needs, it prints the columns it DID
-find and stops. Fill in COLUMN_MAP below only if auto-detection fails.
-"""
-
 from __future__ import annotations
 
 import ast

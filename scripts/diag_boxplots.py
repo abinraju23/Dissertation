@@ -1,22 +1,3 @@
-"""
-What it does
-    - Uses the TRAINING period only (safest for exploration; the frozen test
-      set is never opened for this).
-    - Draws box plot grids: all price features, all sentiment features, and
-      the six most important graph dimensions (from Task 1's output if it
-      exists, otherwise the first six).
-    - Writes a class-separation table (Cohen's d for every feature) -- the
-    effect-size summaries for the class distributions.
-
-Notes
-    - Outliers are hidden in the plots (showfliers=False) so the boxes stay
-      readable; full distributions are in the CSV.
-        - Set DOWNSAMPLE below to reduce plotting time if required. Statistics
-            always use all training rows.
-
-Run from the project root:   python scripts\diag_box_plots.py
-"""
-
 import math
 
 import matplotlib

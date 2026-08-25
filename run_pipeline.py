@@ -1,12 +1,3 @@
-"""Run the dissertation pipeline from data collection through diagnostics.
-
-Run from the repository root with the project virtual environment active:
-    python run_pipeline.py
-
-The collection and graph stages are resumable where their underlying scripts
-support caching. The runner stops immediately if any stage fails.
-"""
-
 from __future__ import annotations
 
 import argparse

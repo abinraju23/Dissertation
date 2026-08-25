@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-"""
-Pipeline audit / leakage & signal diagnostic for config3_features.csv
-
-Purpose: verify the feature matrix, split, and target are CORRECT before
-trusting the ablation result. Reports PASS/FLAG per check and a plain-English
-verdict at the end. It reports whatever is true -- it does not assume an outcome.
-
-Run:  python scripts/audit.py [path_to_config3_features.csv]
-
-Scope: this audits the CSV artifact (features + split + target). It catches
-label misalignment, leakage into features, whether signal exists at all,
-embedding degeneracy, missing-data handling, drift, and split correctness.
-It does NOT audit upstream construction code (FinBERT scoring, Node2Vec params,
-Procrustes alignment, the sentiment market-close anchor). If a specific feature
-group looks dead here, the next step is to check the script that built it.
-"""
-
 import sys
 import re
 import numpy as np

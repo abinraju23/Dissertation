@@ -1,21 +1,3 @@
-"""
-What it does
-    - Recovers the six fitted models (3 configs x 2 model types): loads a
-      saved pickle from models/ if one exists, otherwise refits on the
-      TRAINING period only, using the best_params stored in
-      ablation_results.csv (scaler fit on train only, same as ablation.py).
-    - Reads out LR standardized coefficients and XGBoost gain importance.
-    - Saves one combined CSV plus six bar charts (top 15 features each).
-
-Test-set integrity
-    Nothing here touches the test set. Refitting on training data with the
-    hyperparameters already chosen on validation just recovers the fitted
-    model objects for readout -- it is not a new design decision and no new
-    test evaluation happens.
-
-Run from the project root:   python scripts\diag_feature_importance.py
-"""
-
 import pickle
 
 import matplotlib

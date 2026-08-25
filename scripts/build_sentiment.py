@@ -1,38 +1,3 @@
-"""
-============================================================================
-CONFIG 2 -- SENTIMENT BLOCK  (FinBERT)
-============================================================================
-Pipeline:
-  Stage 1  load raw Alpha Vantage news, keep only our 30 tickers, DEDUP
-           articles globally by URL (same story appears under several
-           tickers' slices), parse timestamps.
-  Stage 2  FinBERT (ProsusAI/finbert) scores each UNIQUE article once on
-           GPU (batched, fp16), signed sentiment = P(pos) - P(neg).
-           Resumable: scored articles are cached to disk and skipped on
-           re-run.
-  Stage 3  fan out each article to its tagged tickers (in our 30),
-           weighted by that ticker's relevance; keep AV's own per-ticker
-           score alongside as a sanity-check.
-  Stage 4  for each (ticker, trading-day) aggregate news in a decay window
-           ending at that day's market close; add news_count companion and
-           carry-forward on quiet days (never zero-filled). Join onto the
-           price spine -> config2_features.csv.
-
-LEAKAGE RULE (important): for a row dated D, only news published at or
-before D's market-close anchor is used, decay-weighted back from that
-anchor. News that postdates the close is excluded, so the sentiment never
-"sees" information that wouldn't be known when the price point is taken.
-
-TIMEZONE ASSUMPTION: Alpha Vantage `time_published` is treated as UTC and
-the market close anchor is ANCHOR_HOUR_UTC (default 21:00 UTC ~= US close).
-If AV times are US-Eastern the anchor is a few hours off but still excludes
-genuine after-close news. Documented for the methods section.
-
-Run:
-    python scripts/build_sentiment.py
-============================================================================
-"""
-
 import os, glob, json, math
 from datetime import datetime, timedelta
 

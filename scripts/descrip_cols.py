@@ -1,22 +1,3 @@
-"""
-============================================================================
-DESCRIPTIVE STATISTICS + INTERPRETATION  --  config3_features.csv
-============================================================================
-Produces the dataset description that report needs, AND explains what each
-number means. Covers: row/coverage counts, class balance per split, price /
-sentiment / graph feature stats, a label-association preview (train only,
-to avoid peeking at test), and an embedding-block summary.
-
-Outputs:
-  console : a readable, annotated report
-  feature_stats.csv      : per-feature mean/median/std/min/max (report table)
-  label_assoc.csv        : each feature's correlation with the label (train)
-  figures/*.png          : class balance, sentiment dist, label-assoc bars
-
-Run:
-    python scripts/descrip_cols.py
-============================================================================
-"""
 import os
 import numpy as np
 import pandas as pd
@@ -84,9 +65,9 @@ def main():
     print(f"Embedding dims       : {len(emb_cols)}")
     print(f"Total feature columns: {len(df.columns)}")
 
-    # ---- class balance (the headline descriptive stat) ----
+    # ---- class balance ----
     print("\n" + "-" * 70)
-    print("CLASS BALANCE  (share of UP days)  --  the baseline models must beat")
+    print("CLASS BALANCE  (share of UP days)")
     print("-" * 70)
     for sp in ["train", "val", "test", None]:
         s = df["label"] if sp is None else df.loc[df["split"] == sp, "label"]
@@ -151,7 +132,7 @@ def main():
     print("  Interpretation: individual correlations near 0 are EXPECTED for next-day")
     print("  direction (a near-coin-flip). The models look for weak signal jointly; this")
     print("  preview just shows no single feature is doing it alone -- which is normal,")
-    print("  not a problem. Computed on train only to avoid peeking at the test set.")
+    print("  Computed on the training period only.")
 
     # ---- save report tables ----
     os.makedirs(OUTDIR, exist_ok=True)
