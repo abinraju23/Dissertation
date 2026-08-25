@@ -23,11 +23,11 @@ TARGET = set(TICKERS)
 # sentiment aggregation knobs
 HALF_LIFE_H = 48.0        # decay half-life (the meaningful knob)
 WINDOW_H    = 100.0       # truncation of the faint tail
-ANCHOR_HOUR_UTC = 21      # market-close anchor for each day (documented assumption)
-STRICT_NO_SAMEDAY = False # True -> exclude all same-day news (anchor at start of day)
+ANCHOR_HOUR_UTC = 21      # market-close anchor for each day
+STRICT_NO_SAMEDAY = False # True -> exclude all same-day news
 LAMBDA = math.log(2) / HALF_LIFE_H
 
-# FinBERT batching (tuned for ~4.5 GB free on the RTX 4050)
+# FinBERT batching
 BATCH_SIZE = 32
 MAX_LEN = 256
 CHECKPOINT_EVERY = 50     # flush cache every N batches
@@ -190,11 +190,7 @@ def build_events(articles, signed_by_url):
 # STAGE 4 -- daily aggregation with decay + carry-forward, join to spine
 # ============================================================================
 def aggregate_ticker(ev, dates):
-    """
-    ev: dict of time-sorted arrays for one ticker.
-    dates: sorted list of pandas Timestamps (that ticker's trading days).
-    Returns DataFrame with one row per date.
-    """
+
     ts = ev["ts"]
     out = []
     last_fb, last_av = 0.0, 0.0

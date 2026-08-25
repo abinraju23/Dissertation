@@ -14,7 +14,7 @@ try:
 except Exception:
     HAVE_PLT = False
 
-# ---- feature groups + plain-language meaning ----
+
 PRICE = {
     "ret_1d": "today's return", "ret_2d": "2-day return", "ret_5d": "5-day return",
     "ret_10d": "10-day return", "ret_lag1": "return 1 day ago", "ret_lag2": "return 2 days ago",

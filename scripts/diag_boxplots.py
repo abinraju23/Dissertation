@@ -11,7 +11,7 @@ from diag_common import (
     detect_feature_groups, ensure_dirs, load_features,
 )
 
-DOWNSAMPLE = None      # e.g. 5000 to plot a random subset of train rows
+DOWNSAMPLE = None
 N_GRAPH_DIMS = 6       # how many graph/embedding dims to plot individually
 
 
