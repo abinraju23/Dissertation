@@ -1,5 +1,5 @@
 """
-run_ablation.py
+ablation.py
 ===============
 Modelling and ablation study for:
     "Leveraging Financial News Knowledge Graphs & NLP for Short-Term
@@ -37,7 +37,7 @@ LEAKAGE-PREVENTION DESIGN  (the core methodological guarantee of this study)
     feature columns going into the model).
 
 Run:
-    python run_ablation.py [path_to_config3_features.csv]
+    python scripts/ablation.py [path_to_config3_features.csv]
 """
 
 from __future__ import annotations

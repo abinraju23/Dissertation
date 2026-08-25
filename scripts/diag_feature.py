@@ -1,7 +1,4 @@
-r"""
-Task 1 of 4 (Agatha, meeting 3): feature importance for XGBoost and
-Logistic Regression, per configuration.
-
+"""
 What it does
     - Recovers the six fitted models (3 configs x 2 model types): loads a
       saved pickle from models/ if one exists, otherwise refits on the
@@ -156,7 +153,7 @@ def main():
             print(f"    {r.feature:<30} {r.importance:+.4f}")
 
     print("\n[importance] done. Expect diffuse importances with no dominant feature --")
-    print("that pattern is itself evidence for the Results chapter, not a problem to fix.")
+    print("the diffuse pattern indicates that no single feature dominates.")
 
 
 if __name__ == "__main__":

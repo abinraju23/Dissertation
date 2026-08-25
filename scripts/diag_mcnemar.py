@@ -1,14 +1,13 @@
 r"""
 Statistical characterisation of the null result: DeLong AUC tests and
-McNemar tests on the STORED test predictions (checklist item 5 -- pairs
-with Agatha's four diagnostics). No model is run; the frozen results are
-only read.
+McNemar tests on the stored test predictions. No model is run; the frozen
+results are only read.
 
 What it does
     - DeLong (1988) standard errors and 95% CIs for each config x model AUC,
       plus a z-test of each AUC against chance (0.50). These are the proper
-      CIs for the report (they replace the provisional Hanley-McNeil ones
-      from diag_roc_curves.py -- expect near-identical numbers).
+            CIs for statistical reporting (they replace the provisional
+            Hanley-McNeil ones from diag_roccurves.py).
     - Paired DeLong tests along the ablation ladder, within each model:
         config1 vs config2  (does adding sentiment change AUC?)
         config2 vs config3  (does adding the graph change AUC?)
@@ -17,7 +16,7 @@ What it does
       (do the models make DIFFERENT mistakes, not just equally many?).
     - Holm correction within each family of six pairwise tests.
 
-Run from the project root:   python scripts\diag_delong_mcnemar.py
+Run from the project root:   python scripts\diag_mcnemar.py
 """
 
 import numpy as np
@@ -284,16 +283,14 @@ def main():
         print("\n  note: the per-observation tests treat all rows as independent, but same-day")
         print("  rows across the 30 stocks are cross-sectionally correlated, so those tests")
         print("  are anti-conservative. Where they disagree, the date-clustered bootstrap CI")
-        print("  is the honest interval to report.")
+        print("  is the preferred interval when accounting for dependence.")
 
     if sig_holm_s == 0 and n_sig_pair == 0 and n_sig_mcn == 0 and (sig_boot in (0, None)):
-        print("\n[delong] done. These three CSVs are the formal backbone of the Results chapter:")
+        print("\n[delong] done. The three CSV files contain the statistical results:")
         print("no configuration separably beats chance, and no feature group changes")
         print("performance -- the observed spread is statistically indistinguishable from noise.")
     else:
         print("\n[delong] done. Report the DeLong and bootstrap intervals together and interpret")
-        print("any marginal result against the dependence caveat above -- send me the three")
-        print("printed blocks and we'll pin the exact wording for the Results chapter.")
 
 
 if __name__ == "__main__":

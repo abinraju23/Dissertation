@@ -1,7 +1,4 @@
-r"""
-Task 2 of 4 (Agatha, meeting 3): comparative box plots of the features,
-split by next-day label (0 = down, 1 = up).
-
+"""
 What it does
     - Uses the TRAINING period only (safest for exploration; the frozen test
       set is never opened for this).
@@ -9,13 +6,13 @@ What it does
       the six most important graph dimensions (from Task 1's output if it
       exists, otherwise the first six).
     - Writes a class-separation table (Cohen's d for every feature) -- the
-      numbers behind "the classes are not separable" for the Results chapter.
+    effect-size summaries for the class distributions.
 
 Notes
     - Outliers are hidden in the plots (showfliers=False) so the boxes stay
       readable; full distributions are in the CSV.
-    - Agatha suggested down-sampling for ease; set DOWNSAMPLE below if the
-      plots are slow on your machine. Statistics always use all train rows.
+        - Set DOWNSAMPLE below to reduce plotting time if required. Statistics
+            always use all training rows.
 
 Run from the project root:   python scripts\diag_box_plots.py
 """
@@ -144,13 +141,13 @@ def main():
                 print(f"[boxplots] graph dims picked by XGBoost config3 importance: {chosen}")
         if not chosen:
             chosen = graph_cols[:N_GRAPH_DIMS]
-            print(f"[boxplots] Task 1 output not found -- plotting first {len(chosen)} graph dims")
+            print(f"[boxplots] Feature-importance output not found -- plotting first {len(chosen)} graph dims")
         grid_boxplot(plot_df, chosen, label_col, d_lookup,
                      "boxplots_graph_features.png",
                      "Graph features by next-day direction (train period)", ncols=3)
 
-    print("\n[boxplots] done. Near-identical boxes are the expected picture --")
-    print("this is the visual evidence Agatha asked for, straight into the Results chapter.")
+    print("\n[boxplots] done. Expect diffuse importances with no dominant feature --")
+    print("class-separation plots and statistics are complete.")
 
 
 if __name__ == "__main__":

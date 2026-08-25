@@ -1,5 +1,5 @@
 """
-delong_tests.py
+delong.py
 ===============
 Statistical characterisation of the FROZEN ablation results (17 Jul 2026)
 for:
@@ -9,7 +9,7 @@ for:
 
 WHAT THIS SCRIPT IS
 -------------------
-The frozen run in run_ablation.py scored the test fold exactly once but
+The frozen run in ablation.py scored the test fold exactly once but
 saved only summary metrics, not per-row predictions. This script:
 
   1. REPRODUCES that run bit-for-bit (same seed, same grids, same
@@ -33,13 +33,13 @@ OPTIONS:
                        nondeterminism in some xgboost builds).
     --allow-mismatch   proceed despite a failed reconciliation. The
                        outputs then CANNOT be described as tests on the
-                       frozen run -- do not use for the report.
+                       frozen run; use only after reconciliation passes.
 
-OUTPUTS (written to the same OUTPUT_DIR as run_ablation.py):
+OUTPUTS (written to the same OUTPUT_DIR as ablation.py):
     test_predictions.csv        per-row test probabilities, all 6 models
     reconciliation_report.csv   reproduced vs frozen metrics, PASS/FAIL
     delong_mcnemar_results.csv  every pairwise test, machine-readable
-    delong_mcnemar_tables.md    formatted tables for the Results chapter
+    delong_mcnemar_tables.md    formatted statistical tables
 
 References:
     DeLong, DeLong & Clarke-Pearson (1988), Biometrics 44(3).
@@ -179,7 +179,7 @@ def wrap_single_thread(factory):
 
 
 def tune_and_predict(factory, grid, splits, seed):
-    """MIRRORS run_one() in run_ablation.py -- same iteration order, same
+    """MIRRORS run_one() in ablation.py -- same iteration order, same
     strictly-greater comparison, same first-best-wins tie handling. Do not
     change one without the other. The only addition is that the winning
     estimator's test probabilities are returned."""
@@ -284,7 +284,7 @@ def reconcile(reproduced: pd.DataFrame, frozen_path: Path, allow_mismatch: bool)
             sys.exit(
                 "Cannot verify that this reproduction matches the frozen run.\n"
                 "Point the script at the pipeline root (so outputs/ablation_results.csv\n"
-                "is visible) or rerun with --allow-mismatch (NOT for the report)."
+                "is visible) or rerun with --allow-mismatch for exploratory use."
             )
         return None
 
@@ -318,7 +318,7 @@ def reconcile(reproduced: pd.DataFrame, frozen_path: Path, allow_mismatch: bool)
     if not all_pass:
         print("\nRECONCILIATION FAILED: this refit does not match the frozen run.")
         print("Try --single-thread (XGBoost threading nondeterminism is the")
-        print("usual cause). Do not use these outputs for the report unless")
+        print("usual cause). Treat these outputs as exploratory until")
         print("reconciliation passes.")
         if not allow_mismatch:
             sys.exit(1)

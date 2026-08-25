@@ -2,7 +2,7 @@
 ============================================================================
 DESCRIPTIVE STATISTICS + INTERPRETATION  --  config3_features.csv
 ============================================================================
-Produces the dataset description your report needs, AND explains what each
+Produces the dataset description that report needs, AND explains what each
 number means. Covers: row/coverage counts, class balance per split, price /
 sentiment / graph feature stats, a label-association preview (train only,
 to avoid peeking at test), and an embedding-block summary.
@@ -14,7 +14,7 @@ Outputs:
   figures/*.png          : class balance, sentiment dist, label-assoc bars
 
 Run:
-    python scripts/describe_features.py
+    python scripts/descrip_cols.py
 ============================================================================
 """
 import os
@@ -86,7 +86,7 @@ def main():
 
     # ---- class balance (the headline descriptive stat) ----
     print("\n" + "-" * 70)
-    print("CLASS BALANCE  (share of UP days)  --  the baseline your models must beat")
+    print("CLASS BALANCE  (share of UP days)  --  the baseline models must beat")
     print("-" * 70)
     for sp in ["train", "val", "test", None]:
         s = df["label"] if sp is None else df.loc[df["split"] == sp, "label"]

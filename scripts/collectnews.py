@@ -18,8 +18,8 @@ default), saving each API response to disk EXACTLY as returned. Key behaviours:
   * Resumable: a slice whose file already exists is skipped, so you can stop and
     re-run safely without re-spending API calls.
 
-Run the whole sweep:        python collect_news_av.py
-Run a few tickers only:     python collect_news_av.py AAPL MSFT NVDA
+Run the whole sweep:        python scripts/collectnews.py
+Run a few tickers only:     python scripts/collectnews.py AAPL MSFT NVDA
 """
 from __future__ import annotations
 

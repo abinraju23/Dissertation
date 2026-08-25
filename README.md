@@ -101,7 +101,7 @@ python scripts/diag_perstock.py
 python scripts/diag_mcnemar.py
 ```
 
-Support and exploratory utilities include `co_occurence_probe.py`,
+Support and exploratory utilities include `co-occurrence_probe.py`,
 `inspect_raw.py`, and `macro_entities.py`.
 
 Modelling tables, predictions, statistical tests, and diagnostic figures are

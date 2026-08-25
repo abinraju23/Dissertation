@@ -6,7 +6,7 @@ Purpose: verify the feature matrix, split, and target are CORRECT before
 trusting the ablation result. Reports PASS/FLAG per check and a plain-English
 verdict at the end. It reports whatever is true -- it does not assume an outcome.
 
-Run:  python audit_pipeline.py [path_to_config3_features.csv]
+Run:  python scripts/audit.py [path_to_config3_features.csv]
 
 Scope: this audits the CSV artifact (features + split + target). It catches
 label misalignment, leakage into features, whether signal exists at all,
@@ -76,7 +76,6 @@ print(f"  price    features : {len(price_cols):>3}  {price_cols[:8]}{' ...' if l
 print(f"  sentiment features: {len(sent_cols):>3}  {sent_cols}")
 print(f"  graph    features : {len(graph_cols):>3}  ({len(emb_cols)} emb + {len(cent_cols)} centrality: {cent_cols})")
 print(f"  ret_next present  : {has_retnext}   split column present: {has_split}")
-print("  >> sanity-check the groups above. If a column is miscategorised, tell me.")
 
 if target_col is None:
     sys.exit("  [ABORT] no target column found (looked for label/target/y).")
@@ -129,7 +128,7 @@ if has_retnext:
     print(f"  agreement( target == (ret_next > 0) ) : {agree:.4f}")
     flag(agree > 0.98, "target matches sign of ret_next -- alignment correct",
          "target does NOT match sign of ret_next -> off-by-one / label bug. "
-         "This alone would produce a chance-level null. FIX THIS FIRST.")
+         "This could produce a chance-level null and should be investigated.")
 else:
     print("  ret_next not in CSV -> cannot verify target construction here.")
     print("  >> confirm target[t] = 1 if close[t+1] > close[t] in the build script.")
@@ -260,7 +259,7 @@ if maxcorr < 0.05 and maxmi < 0.005 and train_auc < 0.56:
     print("  model cannot fit even the TRAINING data above ~chance. This is what a CORRECT")
     print("  pipeline looks like when the null is genuine. No model class -- XGBoost, LSTM,")
     print("  anything -- recovers signal that is not in the features. The null is real and")
-    print("  defensible. Direct your effort at the write-up, not the model.")
+    print("  defensible")
 elif train_auc > 0.65 and val_auc < 0.56:
     print("  READ: The model fits TRAIN in-sample but collapses on validation. That is")
     print("  OVERFITTING / distribution mismatch, NOT absence of signal. Worth pursuing:")

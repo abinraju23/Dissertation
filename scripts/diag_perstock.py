@@ -1,18 +1,16 @@
 r"""
-Task 3 of 4 (Agatha, meeting 3): per-stock error analysis.
-
 What it does
     - Reads the STORED test predictions only (no model is run).
     - Computes AUC, accuracy, and the majority-class share per ticker, for
       every config x model.
     - Puts a 95% CI around each per-ticker AUC (Hanley-McNeil) and counts how
       many tickers sit outside the chance interval -- compared with the ~5%
-      expected by luck alone. This answers Agatha's question directly: is the
-      null uniform across stocks, or driven by a few?
+    expected by chance alone. This assesses whether the null is uniform
+    across stocks or driven by a small subset.
     - Draws one dot plot per model type (30 tickers x 3 configs, with the
       0.50 chance line).
 
-Run from the project root:   python scripts\diag_per_stock.py
+Run from the project root:   python scripts\diag_perstock.py
 """
 
 import matplotlib
@@ -36,7 +34,7 @@ def main():
             "[per-stock] the predictions file has no ticker column, which this "
             "script needs.\nIf the tickers are stored under another name, add it "
             "to COLUMN_MAP['ticker'] in diag_common.py.\nIf they were not stored "
-            "at all, tell me and we'll join them back from the features file by date."
+            "at all, verify the prediction file schema and identifier columns."
         )
 
     rows = []

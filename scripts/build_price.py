@@ -24,7 +24,7 @@ DELIBERATELY NOT DONE HERE:
     day t; only the label looks one day forward.
 
 Run:
-    python scripts/build_prices.py
+    python scripts/build_price.py
 ============================================================================
 """
 
@@ -68,8 +68,7 @@ END = "2025-01-01"          # yfinance end is EXCLUSIVE, so this includes 2024-1
 # "warm" on the first real trading days of Jan 2022 (otherwise early-2022 rows
 # get dropped as warm-up and you lose data you actually want).
 FETCH_START = "2021-11-01"
-
-# Chronological split (your confirmed design)
+# Chronological split
 TRAIN_END = "2023-12-31"    # Train: 2022-2023
 VAL_END = "2024-06-30"      # Val:   2024 H1   -> Test: 2024 H2
 

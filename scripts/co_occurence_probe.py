@@ -6,14 +6,15 @@ Purpose:
     Before freezing the final 30 stocks, check whether they actually FORM A
     CONNECTED GRAPH in the news -- not just whether they have enough articles.
     Also produces the graph descriptive-statistics (node count, edge count,
-    density, components) you need for the report.
+    density, and components for graph description.
 
 What it measures (using data already on disk -- NO FinBERT required):
     1. DIRECT links  : two target stocks tagged in the same article
                        (from Alpha Vantage's own `ticker_sentiment` list).
     2. INDIRECT links: two stocks that both attach to the same MACRO HUB
                        (OIL, FED_RATES, RECESSION, ...) via phrase-matching
-                       the title+summary. This mirrors your macro_entities.py
+                       the title+summary. This mirrors the
+                       macro_entities.py
                        idea and is how XOM and JPM end up "related" without
                        ever sharing a headline.
 
@@ -24,8 +25,8 @@ data to avoid look-ahead. Do not feed this static graph into the model.
 
 How to run:
     1. Set RAW_DIR below to the folder holding your raw news JSON.
-    2. (Optional) edit CANDIDATES to your final list / swaps.
-    3. python co_occurrence_probe.py
+    2. (Optional) edit CANDIDATES to change the candidate list.
+    3. python scripts/co_occurence_probe.py
     4. Read the console verdict; CSVs + heatmap land in OUTPUT_DIR.
 ============================================================================
 """
@@ -69,7 +70,7 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "data", "probe_out")
 # graph is to noise.
 RELEVANCE_MIN = 0.15
 
-# Your candidate 30, grouped by sector (edit freely -- e.g. swap NEM <-> GS).
+
 CANDIDATES = {
     "Information Technology":  ["AAPL", "MSFT", "NVDA", "AMD"],
     "Communication Services":  ["GOOGL", "META", "NFLX", "DIS"],
@@ -88,7 +89,7 @@ SECTOR_OF = {t: s for s, tickers in CANDIDATES.items() for t in tickers}
 
 # ----------------------------------------------------------------------------
 # MACRO HUB LEXICON
-# Self-contained phrase lexicon mirroring your macro_entities.py (8 hubs).
+# Self-contained phrase lexicon mirroring the macro_entities.py (8 hubs).
 # Replace with `from macro_entities import ...` later if you prefer your own.
 # Phrases are matched case-insensitively as whole words on title + summary.
 # ----------------------------------------------------------------------------
@@ -287,7 +288,7 @@ def analyse(tallies, G):
     out(f"Stocks in universe              : {len(TARGETS)}")
     out(f"Macro hubs                      : {len(MACRO_HUBS)}")
     out("")
-    out("--- GRAPH DESCRIPTIVE STATS (for the report) ---")
+    out("--- GRAPH DESCRIPTIVE STATS ---")
     out(f"Nodes (stocks + hubs)           : {n_nodes}")
     out(f"Edges                           : {n_edges}")
     out(f"Graph density                   : {density:.4f}")

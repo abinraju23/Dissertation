@@ -1,15 +1,13 @@
 r"""
-Task 4 of 4 (Agatha, meeting 3): ROC curves with the random-chance baseline.
-
 What it does
     - Reads the STORED test predictions only (no model is run).
     - Draws one panel per model type (Logistic Regression, XGBoost), each
       with the three config curves plus the dashed diagonal for a random
-      classifier (AUC = 0.50) -- the baseline Agatha asked to see.
+    classifier (AUC = 0.50) as the random-classification baseline.
     - Writes an overall AUC table with 95% CIs (Hanley-McNeil for now; the
       DeLong script will replace/confirm these and add pairwise tests).
 
-Run from the project root:   python scripts\diag_roc_curves.py
+Run from the project root:   python scripts\diag_roccurves.py
 """
 
 import matplotlib
